@@ -1,4 +1,4 @@
-import supabase from "~/utils/supabase";
+import supabase from "~/lib/utils/supabase";
 
 export const useDeleteData = async (tableName, id) => {
   try {

@@ -1,13 +1,13 @@
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
-import Listarchive from "~/components/organisms/listArchive";
+import ListArchive from "~/components/organisms/listArchive";
 import ListNotes from "~/components/organisms/listNotes";
 import Header from "~/components/organisms/navbar";
 import Layout from "~/components/templates/layout";
 import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
-import { initialDataNotes } from "~/utils/data";
-import supabase from "~/utils/supabase";
+import { initialDataNotes } from "~/lib/utils/data";
+import supabase from "~/lib/utils/supabase";
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
@@ -102,7 +102,7 @@ const Home = () => {
   return (
     <Layout>
       <Header filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
-      <div className="mt-5 flex w-full flex-col items-center justify-center px-4">
+      <section className="mt-5 flex w-full flex-col items-center justify-center px-4">
         <div className="w-full">
           <h2 className="text-center text-3xl font-bold">Notes</h2>
           <ListNotes
@@ -111,15 +111,15 @@ const Home = () => {
             handleArchive={handleArchive}
           />
         </div>
-        <div className="mt-10 flex w-full flex-col items-center justify-center">
+        <div className="mt-10 w-full">
           <h2 className="text-center text-3xl font-bold">Archive</h2>
-          <Listarchive
+          <ListArchive
             archive={archive}
             handleDeleteArchive={handleDeleteArchive}
             handleUndoArchive={handleUndoArchive}
           />
         </div>
-      </div>
+      </section>
     </Layout>
   );
 };

@@ -4,7 +4,7 @@ const FormInput = ({ handleSubmit, limitChar, formData, handleChangeJudul, handl
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-4 flex flex-col items-center justify-center p-4 md:w-1/2"
+      className="mt-4 flex w-full flex-col items-center justify-center p-4 md:w-4/6 xl:w-1/2"
     >
       <InputJudul handleChangeJudul={handleChangeJudul} formData={formData} limitChar={limitChar} />
       <TextAreaKet handleChange={handleChange} formData={formData} />

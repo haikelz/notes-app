@@ -8,8 +8,8 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
       {filteredNotes.length ? (
         <div
           className={clsx(
-            "mt-6 grid w-full grid-cols-1 grid-rows-1 gap-6",
-            "md:grid-cols-2",
+            "mt-6 grid w-fit grid-cols-1 grid-rows-1 gap-6",
+            "md:w-full md:grid-cols-2",
             "lg:grid-cols-3"
           )}
         >
@@ -17,24 +17,22 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
             <div
               key={note.id}
               className={clsx(
-                "flex cursor-pointer flex-col items-start justify-start rounded-md",
-                "bg-gray-50",
+                "flex cursor-pointer flex-col items-start justify-start",
+                "rounded-md bg-gray-50",
                 "p-4 shadow-md transition duration-200",
                 "hover:scale-105",
                 "dark:bg-gray-800"
               )}
             >
-              <Link to={`/update-note/${note.id}`}>
-                <div className="w-full">
-                  <p className="mb-1 font-bold">Id: {note.id}</p>
-                  <p className="mb-1 font-bold">Judul: {note.judul}</p>
-                  <p className="mb-1 font-bold">Tanggal: {note.createdAt}</p>
-                  <p className="mb-1 font-bold">
-                    Keterangan: <span className="font-medium">{note.keterangan}</span>
-                  </p>
-                </div>
-              </Link>
-              <div className="mt-2 flex gap-4">
+              <div className="w-full">
+                <p className="mb-1 font-bold">ID: {note.id}</p>
+                <p className="mb-1 font-bold">Judul: {note.judul}</p>
+                <p className="mb-1 font-bold">Tanggal: {note.createdAt}</p>
+                <p className="mb-1 font-bold">
+                  Keterangan: <span className="font-medium">{note.keterangan}</span>
+                </p>
+              </div>
+              <div className="mt-2 flex w-full items-end justify-end space-x-4">
                 <button
                   onClick={() => handleDelete(note.id)}
                   className={clsx(
@@ -47,6 +45,19 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
                 >
                   Delete
                 </button>
+                <Link to={`/update-note/${note.id}`}>
+                  <button
+                    className={clsx(
+                      "rounded-md bg-slate-500",
+                      "px-4 py-2",
+                      "font-bold text-white",
+                      "transition-all ease-in-out",
+                      "hover:bg-slate-600"
+                    )}
+                  >
+                    Edit
+                  </button>
+                </Link>
                 <button
                   className={clsx(
                     "rounded-md bg-blue-500",

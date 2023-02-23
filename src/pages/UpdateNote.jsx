@@ -3,7 +3,8 @@ import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { InputJudul, TextAreaKet } from "~/components/atoms";
-import supabase from "~/utils/supabase";
+import supabase from "~/lib/utils/supabase";
+import { showFormattedDate } from "~/lib/utils/data";
 
 const previousNoteAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
 const formDataAtom = atom({ judul: "", keterangan: "" });
@@ -41,7 +42,12 @@ const UpdateNote = () => {
     try {
       const { error } = await supabase
         .from("dicoding-notes")
-        .update({ id: id, judul: formData.judul, keterangan: formData.keterangan })
+        .update({
+          id: id,
+          judul: formData.judul,
+          keterangan: formData.keterangan,
+          createdAt: showFormattedDate(),
+        })
         .eq("id", id);
 
       if (error) throw error;
@@ -73,11 +79,11 @@ const UpdateNote = () => {
   }, [setPreviousNote, id]);
 
   return (
-    <div className="mt-5 flex w-full flex-col items-center justify-center">
+    <section className="mt-5 flex w-full flex-col items-center justify-center">
       <h1 className="text-center text-3xl font-semibold">Update Note</h1>
       <form
         onSubmit={handleSubmit}
-        className="mt-4 flex flex-col items-center justify-center p-4 md:w-1/2"
+        className="mt-4 flex w-full flex-col items-center justify-center p-4 md:w-4/6 xl:w-1/2"
       >
         <InputJudul
           handleChangeJudul={handleChangeJudul}
@@ -98,7 +104,7 @@ const UpdateNote = () => {
           Update Note
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 

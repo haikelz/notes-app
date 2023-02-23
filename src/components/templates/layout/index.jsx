@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 const Layout = ({ children }) => {
   return (
-    <section
+    <main
       className={clsx(
         "flex min-h-screen w-full max-w-full flex-col items-center justify-center",
         "pt-3 pb-8",
@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       )}
     >
       <div className="flex w-full max-w-7xl flex-col items-center justify-center">{children}</div>
-    </section>
+    </main>
   );
 };
 

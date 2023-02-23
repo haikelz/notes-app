@@ -1,8 +1,8 @@
 import { atom, useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import FormInput from "~/components/molecules/formInput";
-import { showFormattedDate } from "~/utils/data";
-import supabase from "~/utils/supabase";
+import { showFormattedDate } from "~/lib/utils/data";
+import supabase from "~/lib/utils/supabase";
 import { generateRandomId } from "~/lib/helpers/generateRandomId";
 
 const limitCharAtom = atom(`Sisa Karakter: ${50}`);
@@ -40,7 +40,7 @@ const AddNote = () => {
           id: generateRandomId,
           judul: formData.judul,
           keterangan: formData.keterangan,
-          createdAt: showFormattedDate,
+          createdAt: showFormattedDate(),
         },
       ]);
 
@@ -54,7 +54,7 @@ const AddNote = () => {
   };
 
   return (
-    <div className="mt-5 flex w-full flex-col items-center justify-center">
+    <section className="mt-5 flex w-full flex-col items-center justify-center">
       <h1 className="text-center text-3xl font-semibold">Add Note</h1>
       <FormInput
         handleChange={handleChange}
@@ -63,7 +63,7 @@ const AddNote = () => {
         limitChar={limitChar}
         handleChangeJudul={handleChangeJudul}
       />
-    </div>
+    </section>
   );
 };
 
