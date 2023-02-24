@@ -47,6 +47,7 @@ const AddNote = () => {
       if (error) throw error;
 
       // jika datanya muncul, maka navigate user ke halaman /home
+      setFormData({ judul: "", keterangan: "" });
       navigate("/", { replace: true });
     } catch (err) {
       console.error(err);

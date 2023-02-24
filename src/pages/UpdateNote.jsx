@@ -51,6 +51,8 @@ const UpdateNote = () => {
         .eq("id", id);
 
       if (error) throw error;
+
+      setFormData({ judul: "", keterangan: "" });
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -67,9 +69,7 @@ const UpdateNote = () => {
           .single();
 
         if (error) throw error;
-        if (data) {
-          setFormData({ judul: data.judul, keterangan: data.keterangan });
-        }
+        if (data) setFormData({ judul: data.judul, keterangan: data.keterangan });
       } catch (err) {
         console.error(err);
       }

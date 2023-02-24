@@ -26,9 +26,15 @@ const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
               )}
             >
               <div className="w-full">
-                <p className="mb-1 font-bold">ID: {item.id}</p>
-                <p className="mb-1 font-bold">Judul: {item.judul}</p>
-                <p className="mb-1 font-bold">Tanggal: {item.createdAt}</p>
+                <p className="mb-1 font-bold">
+                  ID: <span className="font-medium">{item.id}</span>
+                </p>
+                <p className="mb-1 font-bold">
+                  Judul: <span className="font-medium">{item.judul}</span>
+                </p>
+                <p className="mb-1 font-bold">
+                  Tanggal: <span className="font-medium">{item.createdAt}</span>
+                </p>
                 <p className="mb-1 font-bold">
                   Keterangan: <span className="font-medium">{item.keterangan}</span>
                 </p>

@@ -25,9 +25,15 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
               )}
             >
               <div className="w-full">
-                <p className="mb-1 font-bold">ID: {note.id}</p>
-                <p className="mb-1 font-bold">Judul: {note.judul}</p>
-                <p className="mb-1 font-bold">Tanggal: {note.createdAt}</p>
+                <p className="mb-1 font-bold">
+                  ID: <span className="font-medium">{note.id}</span>
+                </p>
+                <p className="mb-1 font-bold">
+                  Judul: <span className="font-medium">{note.judul}</span>
+                </p>
+                <p className="mb-1 font-bold">
+                  Tanggal: <span className="font-medium">{note.createdAt}</span>
+                </p>
                 <p className="mb-1 font-bold">
                   Keterangan: <span className="font-medium">{note.keterangan}</span>
                 </p>

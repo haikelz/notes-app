@@ -1,5 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ListArchive from "~/components/organisms/listArchive";
 import ListNotes from "~/components/organisms/listNotes";
 import Header from "~/components/organisms/navbar";
@@ -12,11 +13,15 @@ import supabase from "~/lib/utils/supabase";
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
 const archiveAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
+const isAuthenticatedAtom = atom(false);
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [notes, setNotes] = useAtom(notesAtom);
   const [filterSearch, setFilterSearch] = useAtom(filterSearchAtom);
   const [archive, setArchive] = useAtom(archiveAtom);
+  const [isAuthenticated, setIsAuthentitcated] = useAtom(isAuthenticatedAtom);
 
   const handleDeleteNotes = (id) => {
     const localNotes = [...notes];
@@ -73,6 +78,20 @@ const Home = () => {
   });
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { error } = await supabase.auth.getUser();
+        if (error) {
+          navigate("/signin");
+          throw error;
+        }
+
+        setIsAuthentitcated(true);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     const getNotesFromSupabase = async () => {
       try {
         const { data, error } = await supabase.from("dicoding-notes").select();
@@ -95,31 +114,36 @@ const Home = () => {
       }
     };
 
+    getUser();
     getNotesFromSupabase();
     getArchiveFromSupabase();
   }, [setNotes, setArchive]);
 
   return (
     <Layout>
-      <Header filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
-      <section className="mt-5 flex w-full flex-col items-center justify-center px-4">
-        <div className="w-full">
-          <h2 className="text-center text-3xl font-bold">Notes</h2>
-          <ListNotes
-            filteredNotes={filteredNotes}
-            handleDelete={handleDeleteNotes}
-            handleArchive={handleArchive}
-          />
-        </div>
-        <div className="mt-10 w-full">
-          <h2 className="text-center text-3xl font-bold">Archive</h2>
-          <ListArchive
-            archive={archive}
-            handleDeleteArchive={handleDeleteArchive}
-            handleUndoArchive={handleUndoArchive}
-          />
-        </div>
-      </section>
+      {isAuthenticated ? (
+        <>
+          <Header filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
+          <section className="mt-5 flex w-full flex-col items-center justify-center px-4">
+            <div className="w-full">
+              <h2 className="text-center text-3xl font-bold">Notes</h2>
+              <ListNotes
+                filteredNotes={filteredNotes}
+                handleDelete={handleDeleteNotes}
+                handleArchive={handleArchive}
+              />
+            </div>
+            <div className="mt-10 w-full">
+              <h2 className="text-center text-3xl font-bold">Archive</h2>
+              <ListArchive
+                archive={archive}
+                handleDeleteArchive={handleDeleteArchive}
+                handleUndoArchive={handleUndoArchive}
+              />
+            </div>
+          </section>
+        </>
+      ) : null}
     </Layout>
   );
 };
