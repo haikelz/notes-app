@@ -61,7 +61,7 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
                       "hover:bg-slate-600"
                     )}
                   >
-                    Edit
+                    Update
                   </button>
                 </Link>
                 <button

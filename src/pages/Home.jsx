@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ListArchive from "~/components/organisms/listArchive";
 import ListNotes from "~/components/organisms/listNotes";
-import Header from "~/components/organisms/navbar";
+import Navbar from "~/components/organisms/navbar";
 import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
 import { initialDataNotes } from "~/lib/utils/data";
@@ -122,7 +122,7 @@ const Home = () => {
     <>
       {isAuthenticated ? (
         <>
-          <Header filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
+          <Navbar filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
           <section className="mt-5 flex w-full flex-col items-center justify-center px-4">
             <div className="w-full">
               <h2 className="text-center text-3xl font-bold">Notes</h2>
