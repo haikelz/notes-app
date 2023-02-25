@@ -3,8 +3,8 @@ import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { InputJudul, TextAreaKet } from "~/components/atoms";
-import supabase from "~/lib/utils/supabase";
 import { showFormattedDate } from "~/lib/utils/data";
+import supabase from "~/lib/utils/supabase";
 
 const previousNoteAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
 const formDataAtom = atom({ judul: "", keterangan: "" });

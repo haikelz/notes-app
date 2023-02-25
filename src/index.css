@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  @apply font-all outline-none;
+  @apply font-fira outline-none;
 }
 
 body {

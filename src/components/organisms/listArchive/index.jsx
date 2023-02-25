@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
 import { TidakAda } from "~/components/atoms";
 
 const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {

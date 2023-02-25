@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkModeButton, SearchNote } from "~/components/atoms";
 import { useDarkMode } from "~/hooks/useDarkMode";
-import supabase from "../../../lib/utils/supabase";
+import supabase from "~/lib/utils/supabase";
 
 const isSignOutAtom = atom(false);
 

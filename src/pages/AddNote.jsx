@@ -1,15 +1,16 @@
 import { atom, useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import FormInput from "~/components/molecules/formInput";
+import { generateRandomId } from "~/lib/helpers/generateRandomId";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
-import { generateRandomId } from "~/lib/helpers/generateRandomId";
 
 const limitCharAtom = atom(`Sisa Karakter: ${50}`);
 const formDataAtom = atom({ judul: "", keterangan: "" });
 
 const AddNote = () => {
   const navigate = useNavigate();
+
   const [limitChar, setLimitChar] = useAtom(limitCharAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
 
@@ -63,6 +64,7 @@ const AddNote = () => {
         formData={formData}
         limitChar={limitChar}
         handleChangeJudul={handleChangeJudul}
+        desc="Add Note"
       />
     </section>
   );

@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        all: ["Fira Code"],
+        fira: ["Fira Code"],
       },
     },
   },

@@ -1,6 +1,7 @@
 import clsx from "clsx";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <main
       className={clsx(
@@ -9,7 +10,9 @@ const Layout = ({ children }) => {
         "dark:bg-gray-900 dark:text-white"
       )}
     >
-      <div className="flex w-full max-w-7xl flex-col items-center justify-center">{children}</div>
+      <div className="flex w-full max-w-7xl flex-col items-center justify-center">
+        <Outlet />
+      </div>
     </main>
   );
 };

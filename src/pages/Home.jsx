@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import ListArchive from "~/components/organisms/listArchive";
 import ListNotes from "~/components/organisms/listNotes";
 import Header from "~/components/organisms/navbar";
-import Layout from "~/components/templates/layout";
 import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
 import { initialDataNotes } from "~/lib/utils/data";
@@ -120,7 +119,7 @@ const Home = () => {
   }, [setNotes, setArchive]);
 
   return (
-    <Layout>
+    <>
       {isAuthenticated ? (
         <>
           <Header filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
@@ -144,7 +143,7 @@ const Home = () => {
           </section>
         </>
       ) : null}
-    </Layout>
+    </>
   );
 };
 

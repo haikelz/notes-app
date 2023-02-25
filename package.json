@@ -1,12 +1,13 @@
 {
   "name": "notes-app",
   "private": true,
-  "version": "0.0.0",
+  "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js .jsx"
+    "lint": "eslint . --ext .js,.jsx"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.8.0",
@@ -25,6 +26,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "postcss": "^8.4.21",

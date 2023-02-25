@@ -7,7 +7,6 @@
             "DOM.Iterable",
             "ESNext"
         ],
-        "allowJs": false,
         "skipLibCheck": true,
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
@@ -27,6 +26,11 @@
         },
     },
     "include": [
-        "./src"
+        "src"
+    ],
+    "references": [
+        {
+            "path": "./jsconfig.node.json"
+        }
     ]
 }

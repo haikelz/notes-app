@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
 
-export const SubmitButton = () => {
+export const SubmitButton = ({ desc }) => {
   return (
     <button
       type="submit"
@@ -13,7 +12,7 @@ export const SubmitButton = () => {
         "hover:bg-blue-600"
       )}
     >
-      Add Note
+      {desc}
     </button>
   );
 };

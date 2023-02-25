@@ -1,6 +1,13 @@
-import { InputJudul, TextAreaKet, SubmitButton } from "~/components/atoms";
+import { InputJudul, SubmitButton, TextAreaKet } from "~/components/atoms";
 
-const FormInput = ({ handleSubmit, limitChar, formData, handleChangeJudul, handleChange }) => {
+const FormInput = ({
+  handleSubmit,
+  limitChar,
+  formData,
+  handleChangeJudul,
+  handleChange,
+  desc,
+}) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -8,7 +15,7 @@ const FormInput = ({ handleSubmit, limitChar, formData, handleChangeJudul, handl
     >
       <InputJudul handleChangeJudul={handleChangeJudul} formData={formData} limitChar={limitChar} />
       <TextAreaKet handleChange={handleChange} formData={formData} />
-      <SubmitButton />
+      <SubmitButton desc={desc} />
     </form>
   );
 };
