@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
-import FormInput from "~/components/molecules/formInput";
+import FormInput from "~/components/molecules/FormInput";
 import { generateRandomId } from "~/lib/helpers/generateRandomId";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";

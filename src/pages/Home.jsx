@@ -3,15 +3,15 @@ import { Suspense } from "react";
 import { lazy } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ListArchive from "~/components/organisms/listArchive";
-import ListNotes from "~/components/organisms/listNotes";
-import Navbar from "~/components/organisms/navbar";
+import ListArchive from "~/components/organisms/ListArchive";
+import ListNotes from "~/components/organisms/ListNotes";
+import Navbar from "~/components/organisms/Navbar";
 import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
 
-const Loading = lazy(() => import("../components/organisms/loading"));
+const Loading = lazy(() => import("../components/organisms/Loading"));
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
