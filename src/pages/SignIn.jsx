@@ -36,7 +36,7 @@ const SignIn = () => {
           className={clsx(
             "mt-3 rounded-md border-2 border-blue-500",
             "flex items-center justify-center space-x-3 px-4 py-2",
-            "font-semibold text-black",
+            "font-semibold text-black dark:text-white",
             "hover:bg-gray-50"
           )}
           type="button"

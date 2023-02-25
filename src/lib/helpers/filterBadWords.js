@@ -15,4 +15,6 @@ export const filterBadWords = (badWord) => {
 };
 */
 
-export {};
+export const filterBadWords = (badWord) => {
+  return badWord.split(" ").map((value) => value);
+};

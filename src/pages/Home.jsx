@@ -1,4 +1,6 @@
 import { atom, useAtom } from "jotai";
+import { Suspense } from "react";
+import { lazy } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ListArchive from "~/components/organisms/listArchive";
@@ -8,6 +10,8 @@ import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
+
+const Loading = lazy(() => import("../components/organisms/loading"));
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
@@ -119,7 +123,7 @@ const Home = () => {
   }, [setNotes, setArchive]);
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       {isAuthenticated ? (
         <>
           <Navbar filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
@@ -143,7 +147,7 @@ const Home = () => {
           </section>
         </>
       ) : null}
-    </>
+    </Suspense>
   );
 };
 

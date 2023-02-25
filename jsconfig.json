@@ -28,6 +28,11 @@
     "include": [
         "src"
     ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules",
+        "dist"
+    ],
     "references": [
         {
             "path": "./jsconfig.node.json"
