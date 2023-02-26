@@ -3,13 +3,14 @@ import { Suspense, lazy, useEffect } from "react";
 import ListArchive from "~/components/organisms/ListArchive";
 import ListNotes from "~/components/organisms/ListNotes";
 import Navbar from "~/components/organisms/Navbar";
-import { useDeleteData } from "~/hooks/useDeleteData";
-import { useInsertData } from "~/hooks/useInsertData";
+import { deleteData } from "~/lib/helpers/deleteData";
+import { insertData } from "~/lib/helpers/insertData";
+import { useTitle } from "~/hooks/useTitle";
 import { useUser } from "~/hooks/useUser";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
 
-const Loading = lazy(() => import("../components/organisms/Loading"));
+const Loading = lazy(() => import("~/components/organisms/Loading"));
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
@@ -26,7 +27,7 @@ const Home = () => {
     const filteredLocalNotes = localNotes.filter((note) => note.id !== id);
 
     setNotes(filteredLocalNotes);
-    useDeleteData("dicoding-notes", id);
+    deleteData("dicoding-notes", id);
   };
 
   const handleDeleteArchive = (id) => {
@@ -34,7 +35,7 @@ const Home = () => {
     const filteredLocalArchive = localArchive.filter((archive) => archive.id !== id);
 
     setArchive(filteredLocalArchive);
-    useDeleteData("dicoding-archive", id);
+    deleteData("dicoding-archive", id);
   };
 
   const handleArchive = (id, judul, keterangan, createdAt) => {
@@ -50,7 +51,7 @@ const Home = () => {
     setArchive(localArchive);
 
     // kemudian, tambahin elemen yang dihapus dari note tadi ke table dicoding-archive
-    useInsertData("dicoding-archive", filteredLocalNotes);
+    insertData("dicoding-archive", filteredLocalNotes);
   };
 
   const handleUndoArchive = (id, judul, keterangan, createdAt) => {
@@ -67,7 +68,7 @@ const Home = () => {
 
     handleDeleteArchive(id);
     setNotes(localNotes);
-    useInsertData("dicoding-notes", filteredLocalArchive);
+    insertData("dicoding-notes", filteredLocalArchive);
   };
 
   const filteredNotes = notes.filter((note) => {
@@ -75,22 +76,9 @@ const Home = () => {
     else if (note.judul.toLowerCase().includes(filterSearch.toLowerCase())) return note;
   });
 
+  useTitle("Home");
+
   useEffect(() => {
-    /*const getUser = async () => {
-      try {
-        const { error } = await supabase.auth.getUser();
-        if (error) {
-          setIsAuthenticated(false);
-          navigate("/signin", { replace: true });
-          throw error;
-        }
-
-        setIsAuthenticated(true);
-      } catch (err) {
-        console.error(err);
-      }
-    };*/
-
     const getNotesFromSupabase = async () => {
       try {
         const { data, error } = await supabase.from("dicoding-notes").select();

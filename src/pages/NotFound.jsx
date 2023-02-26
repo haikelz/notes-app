@@ -1,7 +1,10 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import { useTitle } from "~/hooks/useTitle";
 
 const NotFound = () => {
+  useTitle("Not Found!");
+
   return (
     <section className="flex w-full flex-col items-center justify-center text-center">
       <img className="h-80 w-80" src="/img/not-found.svg" alt="not found" loading="lazy" />

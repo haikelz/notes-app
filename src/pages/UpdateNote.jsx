@@ -2,6 +2,7 @@ import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FormInput from "~/components/molecules/FormInput";
+import { useTitle } from "~/hooks/useTitle";
 import { useUser } from "~/hooks/useUser";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
@@ -59,6 +60,8 @@ const UpdateNote = () => {
       console.error(err);
     }
   };
+
+  useTitle("Update Note");
 
   useEffect(() => {
     const getPreviousNoteFromSupabase = async () => {

@@ -5,29 +5,27 @@ import supabase from "~/lib/utils/supabase";
 
 const isAuthenticatedAtom = atom(false);
 
-export const useUser = () => {
+export const useSession = () => {
   const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const { data, error } = await supabase.auth.getUser();
+    const getSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
 
-        if (error) {
-          setIsAuthenticated(false);
-          navigate("/signin", { replace: true });
-          throw error;
-        }
+      if (error) {
+        setIsAuthenticated(false);
+        throw error;
+      }
 
-        if (data) setIsAuthenticated(true);
-      } catch (err) {
-        console.error(err);
+      if (data.session) {
+        setIsAuthenticated(true);
+        navigate("/", { replace: true });
       }
     };
 
-    getUser();
+    getSession();
   }, [setIsAuthenticated]);
 
   return [isAuthenticated, setIsAuthenticated];

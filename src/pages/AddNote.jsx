@@ -1,6 +1,7 @@
 import { atom, useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import FormInput from "~/components/molecules/FormInput";
+import { useTitle } from "~/hooks/useTitle";
 import { useUser } from "~/hooks/useUser";
 import { generateRandomId } from "~/lib/helpers/generateRandomId";
 import { showFormattedDate } from "~/lib/utils/data";
@@ -55,6 +56,8 @@ const AddNote = () => {
       console.error(err);
     }
   };
+
+  useTitle("Add Note");
 
   return (
     <>

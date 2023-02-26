@@ -1,20 +1,19 @@
 import clsx from "clsx";
-import { atom, useAtom } from "jotai";
-import { useEffect } from "react";
+import { useAtom } from "jotai";
 import { FaGithub, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
+import InputEmail from "~/components/atoms/InputEmail";
+import InputPassword from "~/components/atoms/InputPassword";
 import { useForm } from "~/hooks/useForm";
+import { useSession } from "~/hooks/useSession";
+import { useTitle } from "~/hooks/useTitle";
 import supabase from "~/lib/utils/supabase";
-import { isShowedPasswordAtom } from "~/store";
-
-const isSignInAtom = atom(false);
 
 const SignIn = () => {
   const navigate = useNavigate();
 
-  const [isShowedPassword, setIsShowedPassword] = useAtom(isShowedPasswordAtom);
-  const [isSignIn, setIsSignIn] = useAtom(isSignInAtom);
+  const [isAuthenticated] = useSession();
 
   const { handleChange, values, errors } = useForm();
 
@@ -29,6 +28,7 @@ const SignIn = () => {
         });
 
         if (error) throw error;
+        navigate("/", { replace: true });
       }
     } catch (err) {
       console.error(err);
@@ -44,79 +44,17 @@ const SignIn = () => {
     }
   };
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const { error } = await supabase.auth.getUser();
-
-        if (error) {
-          setIsSignIn(false);
-          throw error;
-        }
-
-        setIsSignIn(true);
-        navigate("/", { replace: true });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getUser();
-  }, []);
+  useTitle("Sign In");
 
   return (
     <>
-      {!isSignIn ? (
+      {!isAuthenticated ? (
         <section className="flex w-full flex-col items-center justify-center p-4">
           <div className="flex w-full max-w-xl flex-col items-center justify-center">
             <span className="text-xl font-semibold">Sign In to Notes App</span>
             <form className="my-4 flex w-full flex-col space-y-3" onSubmit={handleSubmit}>
-              <div className="flex flex-col">
-                <label className="font-semibold" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  className={clsx(
-                    "my-2 rounded-sm border-2 border-blue-500",
-                    "py-1 px-2",
-                    "transition-all ease-in-out",
-                    "focus:ring-2 focus:ring-blue-500"
-                  )}
-                  type="email"
-                  name="email"
-                  onChange={handleChange}
-                  value={values.email}
-                />
-                <span className="text-red-600">{errors.email}</span>
-              </div>
-              <div className="flex flex-col">
-                <label className="font-semibold" htmlFor="password">
-                  Password
-                </label>
-                <div className="relative flex flex-col">
-                  <input
-                    className={clsx(
-                      "my-2 rounded-sm border-2 border-blue-500",
-                      "py-1 px-2",
-                      "transition-all ease-in-out",
-                      "block focus:ring-2 focus:ring-blue-500"
-                    )}
-                    type={isShowedPassword ? "text" : "password"}
-                    name="password"
-                    onChange={handleChange}
-                    value={values.password}
-                  />
-                  <button
-                    type="button"
-                    aria-label="show password"
-                    className="absolute inset-y-0 right-0 mr-3 flex items-center"
-                    onClick={() => setIsShowedPassword(!isShowedPassword)}
-                  >
-                    {isShowedPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                  </button>
-                </div>
-                <span className="text-red-600">{errors.password}</span>
-              </div>
+              <InputEmail values={values} handleChange={handleChange} errors={errors} />
+              <InputPassword values={values} handleChange={handleChange} errors={errors} />
               <button
                 className={clsx(
                   "rounded-sm bg-blue-500",
@@ -163,7 +101,7 @@ const SignIn = () => {
               </button>
             </div>
             <div>
-              <span className="text-base">
+              <span className="text-center text-base">
                 Want to create an account?{" "}
                 <Link className="font-semibold underline" to="/signup">
                   Sign Up
