@@ -1,8 +1,8 @@
-import clsx from "clsx";
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { InputJudul, TextAreaKet } from "~/components/atoms";
+import FormInput from "~/components/molecules/FormInput";
+import { useUser } from "~/hooks/useUser";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
 
@@ -17,6 +17,7 @@ const UpdateNote = () => {
   const [, setPreviousNote] = useAtom(previousNoteAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
   const [limitChar, setLimitChar] = useAtom(limitCharAtom);
+  const [isAuthenticated] = useUser();
 
   const handleChange = (event) => {
     const data = { ...formData };
@@ -79,32 +80,21 @@ const UpdateNote = () => {
   }, [setPreviousNote, id]);
 
   return (
-    <section className="mt-5 flex w-full flex-col items-center justify-center">
-      <h1 className="text-center text-3xl font-semibold">Update Note</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="mt-4 flex w-full flex-col items-center justify-center p-4 md:w-4/6 xl:w-1/2"
-      >
-        <InputJudul
-          handleChangeJudul={handleChangeJudul}
-          formData={formData}
-          limitChar={limitChar}
-        />
-        <TextAreaKet handleChange={handleChange} formData={formData} />
-        <button
-          type="submit"
-          className={clsx(
-            "rounded-lg bg-blue-500",
-            "py-2 px-4",
-            "font-semibold text-white",
-            "drop-shadow-md transition duration-300",
-            "hover:bg-blue-600"
-          )}
-        >
-          Update Note
-        </button>
-      </form>
-    </section>
+    <>
+      {isAuthenticated ? (
+        <section className="mt-5 flex w-full flex-col items-center justify-center">
+          <h1 className="text-center text-3xl font-semibold">Update Note</h1>
+          <FormInput
+            handleSubmit={handleSubmit}
+            limitChar={limitChar}
+            formData={formData}
+            handleChangeJudul={handleChangeJudul}
+            handleChange={handleChange}
+            desc="Update Note"
+          />
+        </section>
+      ) : null}
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { atom, useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import FormInput from "~/components/molecules/FormInput";
+import { useUser } from "~/hooks/useUser";
 import { generateRandomId } from "~/lib/helpers/generateRandomId";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
@@ -13,6 +14,7 @@ const AddNote = () => {
 
   const [limitChar, setLimitChar] = useAtom(limitCharAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
+  const [isAuthenticated] = useUser();
 
   const handleChange = (event) => {
     const data = { ...formData };
@@ -47,7 +49,6 @@ const AddNote = () => {
 
       if (error) throw error;
 
-      // jika datanya muncul, maka navigate user ke halaman /home
       setFormData({ judul: "", keterangan: "" });
       navigate("/", { replace: true });
     } catch (err) {
@@ -56,17 +57,21 @@ const AddNote = () => {
   };
 
   return (
-    <section className="mt-5 flex w-full flex-col items-center justify-center">
-      <h1 className="text-center text-3xl font-semibold">Add Note</h1>
-      <FormInput
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        formData={formData}
-        limitChar={limitChar}
-        handleChangeJudul={handleChangeJudul}
-        desc="Add Note"
-      />
-    </section>
+    <>
+      {isAuthenticated ? (
+        <section className="mt-5 flex w-full flex-col items-center justify-center">
+          <h1 className="text-center text-3xl font-semibold">Add Note</h1>
+          <FormInput
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            formData={formData}
+            limitChar={limitChar}
+            handleChangeJudul={handleChangeJudul}
+            desc="Add Note"
+          />
+        </section>
+      ) : null}
+    </>
   );
 };
 

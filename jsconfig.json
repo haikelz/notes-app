@@ -33,9 +33,4 @@
         "**/node_modules",
         "dist"
     ],
-    "references": [
-        {
-            "path": "./jsconfig.node.json"
-        }
-    ]
 }

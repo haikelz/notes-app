@@ -1,13 +1,11 @@
 import { atom, useAtom } from "jotai";
-import { Suspense } from "react";
-import { lazy } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
 import ListArchive from "~/components/organisms/ListArchive";
 import ListNotes from "~/components/organisms/ListNotes";
 import Navbar from "~/components/organisms/Navbar";
 import { useDeleteData } from "~/hooks/useDeleteData";
 import { useInsertData } from "~/hooks/useInsertData";
+import { useUser } from "~/hooks/useUser";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
 
@@ -16,15 +14,12 @@ const Loading = lazy(() => import("../components/organisms/Loading"));
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
 const archiveAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
-const isAuthenticatedAtom = atom(false);
 
 const Home = () => {
-  const navigate = useNavigate();
-
   const [notes, setNotes] = useAtom(notesAtom);
   const [filterSearch, setFilterSearch] = useAtom(filterSearchAtom);
   const [archive, setArchive] = useAtom(archiveAtom);
-  const [isAuthenticated, setIsAuthentitcated] = useAtom(isAuthenticatedAtom);
+  const [isAuthenticated] = useUser();
 
   const handleDeleteNotes = (id) => {
     const localNotes = [...notes];
@@ -81,19 +76,20 @@ const Home = () => {
   });
 
   useEffect(() => {
-    const getUser = async () => {
+    /*const getUser = async () => {
       try {
         const { error } = await supabase.auth.getUser();
         if (error) {
-          navigate("/signin");
+          setIsAuthenticated(false);
+          navigate("/signin", { replace: true });
           throw error;
         }
 
-        setIsAuthentitcated(true);
+        setIsAuthenticated(true);
       } catch (err) {
         console.error(err);
       }
-    };
+    };*/
 
     const getNotesFromSupabase = async () => {
       try {
@@ -117,7 +113,6 @@ const Home = () => {
       }
     };
 
-    getUser();
     getNotesFromSupabase();
     getArchiveFromSupabase();
   }, [setNotes, setArchive]);
