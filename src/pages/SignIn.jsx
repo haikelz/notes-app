@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import { useAtom } from "jotai";
-import { FaGithub, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import InputEmail from "~/components/atoms/InputEmail";

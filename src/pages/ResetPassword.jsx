@@ -1,5 +1,6 @@
-import clsx from "clsx";
+/*import clsx from "clsx";
 import InputEmail from "~/components/atoms/InputEmail";
+import InputPassword from "~/components/atoms/InputPassword";
 import { useForm } from "~/hooks/useForm";
 import { useSession } from "~/hooks/useSession";
 import { useTitle } from "~/hooks/useTitle";
@@ -14,8 +15,12 @@ const ResetPassword = () => {
     event.preventDefault();
 
     try {
-      if (values.email) {
-        const { error } = await supabase.auth.resetPasswordForEmail(values.email);
+      if (values.email && values.password) {
+        const { error } = await supabase.auth.updateUser({
+          email: values.email,
+          password: values.password,
+        });
+
         if (error) throw error;
       }
     } catch (err) {
@@ -36,10 +41,10 @@ const ResetPassword = () => {
               "p-4"
             )}
           >
-            <span className="text-center text-xl font-semibold">Reset Your Password</span>
-            <p>Enter your email name</p>
+            <span className="text-center text-xl font-semibold">Sign Up to Notes App</span>
             <form className="mt-4 flex w-full flex-col space-y-3" onSubmit={handleSubmit}>
               <InputEmail values={values} handleChange={handleChange} errors={errors} />
+              <InputPassword values={values} handleChange={handleChange} errors={errors} />
               <button
                 className={clsx(
                   "rounded-sm bg-blue-500",
@@ -61,3 +66,5 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+*/
+export {};

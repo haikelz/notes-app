@@ -28,5 +28,5 @@ export const useSession = () => {
     getSession();
   }, [setIsAuthenticated]);
 
-  return [isAuthenticated, setIsAuthenticated];
+  return [isAuthenticated];
 };

@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import InputEmail from "~/components/atoms/InputEmail";
-import InputPassword from "~/components/atoms/InputPassword";
 import { useForm } from "~/hooks/useForm";
 import { useSession } from "~/hooks/useSession";
 import { useTitle } from "~/hooks/useTitle";
 import supabase from "~/lib/utils/supabase";
 
-const SignUp = () => {
+const SendEmailConfirmation = () => {
   const [isAuthenticated] = useSession();
 
   const { handleChange, values, errors } = useForm();
@@ -15,12 +14,8 @@ const SignUp = () => {
     event.preventDefault();
 
     try {
-      if (values.email && values.password) {
-        const { error } = await supabase.auth.signUp({
-          email: values.email,
-          password: values.password,
-        });
-
+      if (values.email) {
+        const { error } = await supabase.auth.resetPasswordForEmail(values.email);
         if (error) throw error;
       }
     } catch (err) {
@@ -28,7 +23,7 @@ const SignUp = () => {
     }
   };
 
-  useTitle("Sign Up");
+  useTitle("Send Email Confirmation");
 
   return (
     <>
@@ -41,10 +36,10 @@ const SignUp = () => {
               "p-4"
             )}
           >
-            <span className="text-center text-xl font-semibold">Sign Up to Notes App</span>
+            <span className="text-center text-xl font-semibold">Reset Your Password</span>
+            <p>Enter your email name</p>
             <form className="mt-4 flex w-full flex-col space-y-3" onSubmit={handleSubmit}>
               <InputEmail values={values} handleChange={handleChange} errors={errors} />
-              <InputPassword values={values} handleChange={handleChange} errors={errors} />
               <button
                 className={clsx(
                   "rounded-sm bg-blue-500",
@@ -65,4 +60,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SendEmailConfirmation;
