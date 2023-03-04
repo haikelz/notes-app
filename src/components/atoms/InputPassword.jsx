@@ -37,7 +37,7 @@ const InputPassword = ({ values, handleChange, errors }) => {
           {isShowedPassword ? <FaRegEye /> : <FaRegEyeSlash />}
         </button>
       </div>
-      <span className="text-red-600">{errors.password}</span>
+      <span className="text-red-600 dark:text-red-300">{errors.password}</span>
     </div>
   );
 };

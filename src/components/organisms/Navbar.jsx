@@ -45,7 +45,7 @@ const Navbar = ({ filterSearch, setFilterSearch, isOpen, setIsOpen }) => {
           <div className="rounded-full bg-red-300 p-1 dark:bg-yellow-300">
             <img
               className="h-12 w-12 cursor-pointer rounded-full"
-              src={profile.avatar}
+              src={profile.avatar ? profile.avatar : "/img/default-user-image.png"}
               alt="user avatar"
               onClick={() => setIsOpen(!isOpen)}
               loading="lazy"

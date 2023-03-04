@@ -58,7 +58,7 @@ const Modal = ({ isOpen, setIsOpen }) => {
         <div className="flex flex-col items-center justify-center">
           <img
             className={clsx("h-56 w-56 rounded-full bg-red-300 p-1", "dark:bg-yellow-300")}
-            src={profile.avatar}
+            src={profile.avatar ? profile.avatar : "/img/default-user-image.png"}
             alt="user avatar"
             loading="lazy"
           />

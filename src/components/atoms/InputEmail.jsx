@@ -21,7 +21,7 @@ const InputEmail = ({ values, handleChange, errors }) => {
         value={values.email}
         required
       />
-      <span className="text-red-600">{errors.email}</span>
+      <span className="text-red-600 dark:text-red-300">{errors.email}</span>
     </div>
   );
 };

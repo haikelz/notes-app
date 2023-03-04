@@ -1,5 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loading from "./components/organisms/Loading";
 import Layout from "./components/templates/Layout";
@@ -13,6 +13,7 @@ import SignUp from "./pages/SignUp";
 import UpdateNote from "./pages/UpdateNote";
 
 const isLoadingAtom = atom(false);
+
 const App = () => {
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 

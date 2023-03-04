@@ -16,7 +16,6 @@ export const TextAreaKet = ({ formData, handleChange }) => {
           "focus:border-blue-600 focus:outline-none focus:ring-0",
           "dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
         )}
-        placeholder=""
         required
       />
       <div className="mt-2 font-medium">

@@ -60,8 +60,8 @@ const Home = () => {
   const handleUndoArchive = (id, judul, keterangan, createdAt) => {
     const localArchive = [...archive];
     const filteredLocalArchive = localArchive.filter((arc) => arc.id === id);
-
     const localNotes = [...notes];
+
     localNotes.push({
       id: id,
       judul: judul,
@@ -80,7 +80,7 @@ const Home = () => {
         if (filterSearch === "") return note;
         else if (note.judul.toLowerCase().includes(filterSearch.toLowerCase())) return note;
       }),
-    [filterSearch, notes]
+    [(filterSearch, notes)]
   );
 
   useTitle("Home");

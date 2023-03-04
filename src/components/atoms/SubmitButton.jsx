@@ -9,6 +9,7 @@ export const SubmitButton = ({ desc }) => {
         "py-2 px-4",
         "font-semibold text-white",
         "drop-shadow-md",
+        "transition-all ease-in-out",
         "hover:bg-blue-600"
       )}
     >

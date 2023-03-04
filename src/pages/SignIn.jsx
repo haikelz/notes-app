@@ -21,7 +21,7 @@ const SignIn = () => {
 
     try {
       if (values.email && values.password) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
         });
@@ -59,6 +59,7 @@ const SignIn = () => {
                   "rounded-sm bg-blue-500",
                   "px-3 py-2",
                   "font-semibold text-white",
+                  "transition-all ease-in-out",
                   "hover:bg-blue-600"
                 )}
                 type="submit"
@@ -76,6 +77,7 @@ const SignIn = () => {
                   "rounded-md bg-gray-700",
                   "flex items-center justify-center space-x-3 px-4 py-2",
                   "font-semibold text-white",
+                  "transition-all ease-in-out",
                   "hover:bg-gray-800"
                 )}
                 onClick={() => signInWithOAuth("github")}
@@ -88,6 +90,7 @@ const SignIn = () => {
                   "rounded-md border-2 border-blue-500",
                   "flex items-center justify-center space-x-3 px-4 py-2",
                   "font-semibold text-black",
+                  "transition-all ease-in-out",
                   "dark:text-white dark:hover:text-black",
                   "hover:bg-gray-50"
                 )}
