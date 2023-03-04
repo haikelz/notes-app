@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 export const TextAreaKet = ({ formData, handleChange }) => {
   return (
@@ -24,3 +25,5 @@ export const TextAreaKet = ({ formData, handleChange }) => {
     </div>
   );
 };
+
+memo(TextAreaKet);

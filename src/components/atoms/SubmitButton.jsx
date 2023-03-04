@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 export const SubmitButton = ({ desc }) => {
   return (
@@ -17,3 +18,5 @@ export const SubmitButton = ({ desc }) => {
     </button>
   );
 };
+
+memo(SubmitButton);

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 export const InputJudul = ({ formData, limitChar, handleChangeJudul }) => {
   return (
@@ -25,3 +26,5 @@ export const InputJudul = ({ formData, limitChar, handleChangeJudul }) => {
     </div>
   );
 };
+
+memo(InputJudul);

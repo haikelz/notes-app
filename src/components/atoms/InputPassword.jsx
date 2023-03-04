@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { atom, useAtom } from "jotai";
+import { memo } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const isShowedPasswordAtom = atom(false);
@@ -42,3 +43,4 @@ export const InputPassword = ({ values, handleChange, errors }) => {
   );
 };
 
+memo(InputPassword);

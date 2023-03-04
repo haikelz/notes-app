@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 export const TidakAda = ({ desc }) => {
   return (
     <div className="mt-6 flex flex-col items-center justify-center text-center">
@@ -6,3 +8,5 @@ export const TidakAda = ({ desc }) => {
     </div>
   );
 };
+
+memo(TidakAda);

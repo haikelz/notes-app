@@ -49,7 +49,7 @@ const SignIn = () => {
       {!isAuthenticated ? (
         <section className="flex w-full flex-col items-center justify-center p-4">
           <div className="flex w-full max-w-xl flex-col items-center justify-center">
-            <span className="text-2xl font-semibold">Sign In to Notes App</span>
+            <span className="text-center text-3xl font-semibold">Sign In to Notes App</span>
             <form className="my-4 flex w-full flex-col space-y-3" onSubmit={handleSubmit}>
               <InputEmail values={values} handleChange={handleChange} errors={errors} />
               <InputPassword values={values} handleChange={handleChange} errors={errors} />
