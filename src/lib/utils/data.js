@@ -16,3 +16,5 @@ export const initialDataNotes = [
     createdAt: "",
   },
 ];
+
+export const initialDataArchive = [{ id: "", judul: "", keterangan: "", createdAt: "" }];

@@ -1,4 +1,4 @@
-/*import clsx from "clsx";
+import clsx from "clsx";
 import InputEmail from "~/components/atoms/InputEmail";
 import InputPassword from "~/components/atoms/InputPassword";
 import { useForm } from "~/hooks/useForm";
@@ -66,5 +66,3 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
-*/
-export {};

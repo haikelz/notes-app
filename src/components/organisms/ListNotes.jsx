@@ -1,14 +1,16 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import reactStringReplace from "react-string-replace";
 import { TidakAda } from "~/components/atoms";
 
-const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
+const ListNotes = ({ filteredNotes, handleDeleteNotes, handleArchive, filterSearch }) => {
   return (
     <>
       {filteredNotes.length ? (
         <div
           className={clsx(
-            "mt-6 grid w-fit grid-cols-1 grid-rows-1 gap-6",
+            "mt-6 grid w-fit",
+            "grid-cols-1 grid-rows-1 gap-6",
             "md:w-full md:grid-cols-2",
             "lg:grid-cols-3"
           )}
@@ -17,7 +19,7 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
             <div
               key={note.id}
               className={clsx(
-                "flex cursor-pointer flex-col items-start justify-start",
+                "flex w-full cursor-pointer flex-col items-start justify-start",
                 "rounded-md bg-gray-50",
                 "p-4 shadow-md transition duration-200",
                 "hover:scale-105",
@@ -25,22 +27,31 @@ const ListNotes = ({ filteredNotes, handleDelete, handleArchive }) => {
               )}
             >
               <div className="w-full">
-                <p className="mb-1 font-bold">
-                  ID: <span className="font-medium">{note.id}</span>
+                <p className="mb-1 font-semibold">
+                  ID: <span className="font-normal">{note.id}</span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Judul: <span className="font-medium">{note.judul}</span>
+                <p className="mb-1 font-semibold">
+                  Judul:{" "}
+                  <span className="font-normal">
+                    {filterSearch
+                      ? reactStringReplace(note.judul, filterSearch, (match, index) => (
+                          <span key={index + 1} className="text-yellow-500">
+                            {match}
+                          </span>
+                        ))
+                      : note.judul}
+                  </span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Tanggal: <span className="font-medium">{note.createdAt}</span>
+                <p className="mb-1 font-semibold">
+                  Tanggal: <span className="font-normal">{note.createdAt}</span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Keterangan: <span className="font-medium">{note.keterangan}</span>
+                <p className="mb-1 font-semibold">
+                  Keterangan: <span className="font-normal">{note.keterangan}</span>
                 </p>
               </div>
               <div className="mt-2 flex w-full items-end justify-end space-x-4">
                 <button
-                  onClick={() => handleDelete(note.id)}
+                  onClick={() => handleDeleteNotes(note.id)}
                   className={clsx(
                     "rounded-md bg-rose-400",
                     "px-4 py-2",

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 export const SearchNote = ({ filterSearch, setFilterSearch }) => {
   return (
@@ -9,8 +10,9 @@ export const SearchNote = ({ filterSearch, setFilterSearch }) => {
       onChange={(event) => setFilterSearch(event.target.value)}
       className={clsx(
         "peer block appearance-none",
-        "border-2 border-blue-500 bg-transparent",
-        "p-3 py-2.5",
+        "w-72 border-2 border-blue-500 bg-transparent",
+        "px-3 py-2.5",
+        "transition-all ease-in-out",
         "font-semibold text-gray-900",
         "focus:outline-none focus:ring-2 focus:ring-blue-600",
         "dark:text-white dark:focus:ring-blue-500"
@@ -18,3 +20,5 @@ export const SearchNote = ({ filterSearch, setFilterSearch }) => {
     />
   );
 };
+
+memo(SearchNote);

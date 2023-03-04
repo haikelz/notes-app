@@ -1,6 +1,8 @@
+import { memo } from "react";
+
 const Loading = () => {
   return (
-    <section className="flex items-center justify-center space-x-2">
+    <section className="flex min-h-screen items-center justify-center space-x-1">
       <div role="status">
         <svg
           aria-hidden="true"
@@ -19,9 +21,9 @@ const Loading = () => {
           />
         </svg>
       </div>
-      <p className="text-lg font-bold">Loading....</p>
+      <p className="text-xl font-semibold">Loading....</p>
     </section>
   );
 };
 
-export default Loading;
+export default memo(Loading);

@@ -41,7 +41,7 @@ const SignUp = () => {
               "p-4"
             )}
           >
-            <span className="text-center text-xl font-semibold">Sign Up to Notes App</span>
+            <span className="text-center text-2xl font-semibold">Sign Up to Notes App</span>
             <form className="mt-4 flex w-full flex-col space-y-3" onSubmit={handleSubmit}>
               <InputEmail values={values} handleChange={handleChange} errors={errors} />
               <InputPassword values={values} handleChange={handleChange} errors={errors} />

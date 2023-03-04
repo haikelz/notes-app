@@ -28,9 +28,11 @@ const AddNote = () => {
     const data = { ...formData };
     data[event.target.name] = event.target.value.slice(0, 50);
 
-    if (event.target.value.length >= 0 && event.target.value.length <= 50)
+    if (event.target.value.length >= 0 && event.target.value.length <= 50) {
       setLimitChar(`Sisa Karakter: ${50 - event.target.value.length}`);
-    else setLimitChar("Karakter melebihi batas!");
+    } else {
+      setLimitChar("Karakter melebihi batas!");
+    }
 
     setFormData(data);
   };

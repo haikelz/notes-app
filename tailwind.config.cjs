@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         fira: ["Fira Code"],
+        rubik: ["Rubik"],
       },
     },
   },

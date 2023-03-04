@@ -1,35 +1,14 @@
 import clsx from "clsx";
-import { atom, useAtom } from "jotai";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { memo } from "react";
+import { Link } from "react-router-dom";
 import { DarkModeButton, SearchNote } from "~/components/atoms";
 import { useDarkMode } from "~/hooks/useDarkMode";
-import supabase from "~/lib/utils/supabase";
+import { profileAtom } from "~/store";
 
-const isSignOutAtom = atom(false);
-
-const Navbar = ({ filterSearch, setFilterSearch }) => {
-  const navigate = useNavigate();
-
+const Navbar = ({ filterSearch, setFilterSearch, isOpen, setIsOpen }) => {
   const [darkMode, setDarkMode] = useDarkMode();
-  const [isSignOut, setIsSignOut] = useAtom(isSignOutAtom);
-
-  useEffect(() => {
-    if (isSignOut) {
-      const signOut = async () => {
-        try {
-          const { error } = await supabase.auth.signOut();
-          if (error) throw error;
-
-          navigate("/signin");
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
-      signOut();
-    }
-  }, [isSignOut]);
+  const [profile] = useAtom(profileAtom);
 
   return (
     <nav
@@ -43,31 +22,39 @@ const Navbar = ({ filterSearch, setFilterSearch }) => {
         "md:flex-row md:justify-between"
       )}
     >
-      <div className="flex flex-col items-start justify-start">
-        <div className="flex items-center justify-center">
+      <div
+        className={clsx(
+          "flex flex-col items-center justify-center",
+          "md:items-start md:justify-start"
+        )}
+      >
+        <div className="mb-4 flex items-center justify-center">
           <h1 className="mr-4 text-center text-3xl font-bold">notes.app</h1>
           <DarkModeButton
             darkMode={darkMode}
             changeMode={() => setDarkMode(darkMode === "dark" ? "light" : "dark")}
           />
         </div>
-      </div>
-      <div className="mt-4 text-center md:mt-0 md:text-end">
         <SearchNote filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
-        <div className="mt-3 space-x-3">
+      </div>
+      <div className={clsx("mt-4 text-center", "md:mt-0 md:text-end")}>
+        <div className="flex items-center justify-center space-x-3">
           <Link role="button" to="/add-note" className="cursor-pointer font-medium underline">
             + Add your note
           </Link>
-          <button
-            className="cursor-pointer font-medium underline"
-            onClick={() => setIsSignOut(true)}
-          >
-            Logout
-          </button>
+          <div className="rounded-full bg-red-300 p-1 dark:bg-yellow-300">
+            <img
+              className="h-12 w-12 cursor-pointer rounded-full"
+              src={profile.avatar}
+              alt="user avatar"
+              onClick={() => setIsOpen(!isOpen)}
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

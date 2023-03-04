@@ -17,7 +17,8 @@ const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
             <div
               key={item.id}
               className={clsx(
-                "flex cursor-pointer flex-col items-start justify-start",
+                "flex w-full cursor-pointer flex-col items-start justify-start",
+                "border-red-500",
                 "rounded-md bg-gray-50 p-4",
                 "shadow-md transition duration-200",
                 "hover:scale-105",
@@ -25,17 +26,17 @@ const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
               )}
             >
               <div className="w-full">
-                <p className="mb-1 font-bold">
-                  ID: <span className="font-medium">{item.id}</span>
+                <p className="mb-1 font-semibold">
+                  ID: <span className="font-normal">{item.id}</span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Judul: <span className="font-medium">{item.judul}</span>
+                <p className="mb-1 font-semibold">
+                  Judul: <span className="font-normal">{item.judul}</span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Tanggal: <span className="font-medium">{item.createdAt}</span>
+                <p className="mb-1 font-semibold">
+                  Tanggal: <span className="font-normal">{item.createdAt}</span>
                 </p>
-                <p className="mb-1 font-bold">
-                  Keterangan: <span className="font-medium">{item.keterangan}</span>
+                <p className="mb-1 font-semibold">
+                  Keterangan: <span className="font-normal">{item.keterangan}</span>
                 </p>
               </div>
               <div className="mt-2 flex w-full items-end justify-end space-x-4">

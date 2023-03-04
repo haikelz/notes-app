@@ -5,7 +5,7 @@ export const SubmitButton = ({ desc }) => {
     <button
       type="submit"
       className={clsx(
-        "rounded-lg bg-blue-500",
+        "rounded-md bg-blue-500",
         "py-2 px-4",
         "font-semibold text-white",
         "drop-shadow-md",

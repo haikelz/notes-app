@@ -1,26 +1,29 @@
 import { atom, useAtom } from "jotai";
-import { Suspense, lazy, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import ListArchive from "~/components/organisms/ListArchive";
 import ListNotes from "~/components/organisms/ListNotes";
+import Modal from "~/components/organisms/Modal";
 import Navbar from "~/components/organisms/Navbar";
-import { deleteData } from "~/lib/helpers/deleteData";
-import { insertData } from "~/lib/helpers/insertData";
 import { useTitle } from "~/hooks/useTitle";
 import { useUser } from "~/hooks/useUser";
+import { deleteData } from "~/lib/helpers/deleteData";
+import { insertData } from "~/lib/helpers/insertData";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
-
-const Loading = lazy(() => import("~/components/organisms/Loading"));
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
 const archiveAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
+const isOpenAtom = atom(false);
+const isLoadingAtom = atom(false);
 
 const Home = () => {
   const [notes, setNotes] = useAtom(notesAtom);
   const [filterSearch, setFilterSearch] = useAtom(filterSearchAtom);
   const [archive, setArchive] = useAtom(archiveAtom);
+  const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const [isAuthenticated] = useUser();
+  const [, setIsLoading] = useAtom(isLoadingAtom);
 
   const handleDeleteNotes = (id) => {
     const localNotes = [...notes];
@@ -71,10 +74,14 @@ const Home = () => {
     insertData("dicoding-notes", filteredLocalArchive);
   };
 
-  const filteredNotes = notes.filter((note) => {
-    if (filterSearch === "") return note;
-    else if (note.judul.toLowerCase().includes(filterSearch.toLowerCase())) return note;
-  });
+  const filteredNotes = useMemo(
+    () =>
+      notes.filter((note) => {
+        if (filterSearch === "") return note;
+        else if (note.judul.toLowerCase().includes(filterSearch.toLowerCase())) return note;
+      }),
+    [filterSearch, notes]
+  );
 
   useTitle("Home");
 
@@ -85,6 +92,7 @@ const Home = () => {
 
         if (error) throw error;
         if (data) setNotes(data);
+        setIsLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -103,23 +111,29 @@ const Home = () => {
 
     getNotesFromSupabase();
     getArchiveFromSupabase();
-  }, [setNotes, setArchive]);
+  }, [setNotes, setIsLoading, setArchive]);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       {isAuthenticated ? (
         <>
-          <Navbar filterSearch={filterSearch} setFilterSearch={setFilterSearch} />
-          <section className="mt-5 flex w-full flex-col items-center justify-center px-4">
-            <div className="w-full">
+          <Navbar
+            filterSearch={filterSearch}
+            setFilterSearch={setFilterSearch}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+          <section className="mt-10 flex w-full flex-col items-center justify-center px-4">
+            <div className="flex w-full flex-col items-center justify-center">
               <h2 className="text-center text-3xl font-bold">Notes</h2>
               <ListNotes
                 filteredNotes={filteredNotes}
-                handleDelete={handleDeleteNotes}
+                handleDeleteNotes={handleDeleteNotes}
                 handleArchive={handleArchive}
+                filterSearch={filterSearch}
               />
             </div>
-            <div className="mt-10 w-full">
+            <div className="mt-10 flex w-full flex-col items-center justify-center">
               <h2 className="text-center text-3xl font-bold">Archive</h2>
               <ListArchive
                 archive={archive}
@@ -128,9 +142,10 @@ const Home = () => {
               />
             </div>
           </section>
+          {isOpen ? <Modal setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
         </>
       ) : null}
-    </Suspense>
+    </>
   );
 };
 
