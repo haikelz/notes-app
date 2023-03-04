@@ -24,8 +24,13 @@ export const useUser = () => {
         }
 
         if (data) {
-          const { avatar_url, email, full_name } = data.user.user_metadata;
-          setProfile({ avatar: avatar_url, email: email, fullname: full_name });
+          console.log(data);
+
+          setProfile({
+            avatar: data.user.user_metadata.avatar_url,
+            email: data.user.email,
+            fullname: data.user.user_metadata.full_name,
+          });
           setIsAuthenticated(true);
         }
       } catch (err) {

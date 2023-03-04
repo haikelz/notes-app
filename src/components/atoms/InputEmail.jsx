@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-const InputEmail = ({ values, handleChange, errors }) => {
+export const InputEmail = ({ values, handleChange, errors }) => {
   return (
     <div className="flex flex-col">
       <label className="font-semibold" htmlFor="email">
@@ -25,5 +25,3 @@ const InputEmail = ({ values, handleChange, errors }) => {
     </div>
   );
 };
-
-export default InputEmail;

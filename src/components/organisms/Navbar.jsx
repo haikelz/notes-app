@@ -7,8 +7,8 @@ import { useDarkMode } from "~/hooks/useDarkMode";
 import { profileAtom } from "~/store";
 
 const Navbar = ({ filterSearch, setFilterSearch, isOpen, setIsOpen }) => {
-  const [darkMode, setDarkMode] = useDarkMode();
   const [profile] = useAtom(profileAtom);
+  const [darkMode, setDarkMode] = useDarkMode();
 
   return (
     <nav

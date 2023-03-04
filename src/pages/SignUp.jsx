@@ -1,19 +1,18 @@
 import clsx from "clsx";
 import { atom, useAtom } from "jotai";
-import { MdClose } from "react-icons/md";
-import InputEmail from "~/components/atoms/InputEmail";
-import InputPassword from "~/components/atoms/InputPassword";
+import { InputEmail, InputPassword } from "~/components/atoms";
+import Modal from "~/components/organisms/Modal";
 import { useForm } from "~/hooks/useForm";
 import { useSession } from "~/hooks/useSession";
 import { useTitle } from "~/hooks/useTitle";
 import supabase from "~/lib/utils/supabase";
 
 const isSentAtom = atom(false);
-const isOpenAtom = atom(false);
+const identitiesAtom = atom([]);
 
 const SignUp = () => {
   const [isSent, setIsSent] = useAtom(isSentAtom);
-  const [isOpen, setIsOpen] = useAtom(isOpenAtom);
+  const [identities, setIdentities] = useAtom(identitiesAtom);
   const [isAuthenticated] = useSession();
 
   const { handleChange, values, errors } = useForm();
@@ -29,7 +28,11 @@ const SignUp = () => {
         });
 
         if (error) throw error;
-        if (data) setIsSent(true);
+        if (data) {
+          setIsSent(true);
+          setIdentities(data.user.identities);
+        }
+        console.log(data);
       }
     } catch (err) {
       console.error(err);
@@ -71,38 +74,18 @@ const SignUp = () => {
             </div>
           </section>
           {isSent ? (
-            <div
-              className={clsx(
-                "fixed inset-0 z-20 flex h-full w-full",
-                "items-center justify-center",
-                "bg-white/20 backdrop-blur-md dark:bg-black/20"
-              )}
-            >
-              <div
-                className={clsx(
-                  "rounded-md bg-white p-3 shadow-lg",
-                  "dark:bg-gray-800 dark:text-white"
+            <Modal isOpen={isSent} setIsOpen={setIsSent}>
+              <div className="mt-3 flex flex-col items-center justify-center text-center">
+                {identities.length ? (
+                  <p>Berhasil! Silahkan cek Email mu ya</p>
+                ) : (
+                  <p>
+                    Alamat Email yang kamu masukkan sudah terdaftar! Pastikan Email kamu belum
+                    pernah didaftarkan kesini!
+                  </p>
                 )}
-              >
-                <button
-                  className={clsx(
-                    "rounded-lg p-1 text-black",
-                    "transition-all ease-in-out",
-                    "hover:bg-slate-500 hover:text-white",
-                    "dark:text-white dark:hover:bg-white dark:hover:text-gray-900"
-                  )}
-                  type="button"
-                  aria-label="close"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <MdClose size={24} />
-                </button>
-                <div className="flex flex-col items-center justify-center">
-                  <p>Berhasil!</p>
-                  <p>Silahkan cek email ya</p>
-                </div>
               </div>
-            </div>
+            </Modal>
           ) : null}
         </>
       ) : null}

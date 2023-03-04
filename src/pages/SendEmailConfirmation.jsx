@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect } from "react";
-import InputEmail from "~/components/atoms/InputEmail";
+import { InputEmail } from "~/components/atoms";
 import { useForm } from "~/hooks/useForm";
 import { useTitle } from "~/hooks/useTitle";
 import supabase from "~/lib/utils/supabase";

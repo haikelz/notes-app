@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import InputEmail from "~/components/atoms/InputEmail";
-import InputPassword from "~/components/atoms/InputPassword";
+import { InputEmail, InputPassword } from "~/components/atoms";
 import { useForm } from "~/hooks/useForm";
 import { useSession } from "~/hooks/useSession";
 import { useTitle } from "~/hooks/useTitle";

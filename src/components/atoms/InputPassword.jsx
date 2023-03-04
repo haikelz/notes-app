@@ -4,7 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const isShowedPasswordAtom = atom(false);
 
-const InputPassword = ({ values, handleChange, errors }) => {
+export const InputPassword = ({ values, handleChange, errors }) => {
   const [isShowedPassword, setIsShowedPassword] = useAtom(isShowedPasswordAtom);
 
   return (
@@ -42,4 +42,3 @@ const InputPassword = ({ values, handleChange, errors }) => {
   );
 };
 
-export default InputPassword;

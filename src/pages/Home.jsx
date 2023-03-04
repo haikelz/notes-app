@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import { atom, useAtom } from "jotai";
 import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import ListArchive from "~/components/organisms/ListArchive";
 import ListNotes from "~/components/organisms/ListNotes";
 import Modal from "~/components/organisms/Modal";
@@ -10,12 +12,14 @@ import { deleteData } from "~/lib/helpers/deleteData";
 import { insertData } from "~/lib/helpers/insertData";
 import { initialDataNotes } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
+import { profileAtom } from "~/store";
 
 const filterSearchAtom = atom("");
 const notesAtom = atom(initialDataNotes);
 const archiveAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
 const isOpenAtom = atom(false);
 const isLoadingAtom = atom(false);
+const isSignOutAtom = atom(false);
 
 const Home = () => {
   const [notes, setNotes] = useAtom(notesAtom);
@@ -24,6 +28,10 @@ const Home = () => {
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const [isAuthenticated] = useUser();
   const [, setIsLoading] = useAtom(isLoadingAtom);
+  const [isSignOut, setIsSignOut] = useAtom(isSignOutAtom);
+  const [profile] = useAtom(profileAtom);
+
+  const navigate = useNavigate();
 
   const handleDeleteNotes = (id) => {
     const localNotes = [...notes];
@@ -80,7 +88,7 @@ const Home = () => {
         if (filterSearch === "") return note;
         else if (note.judul.toLowerCase().includes(filterSearch.toLowerCase())) return note;
       }),
-    [(filterSearch, notes)]
+    [filterSearch, notes]
   );
 
   useTitle("Home");
@@ -91,8 +99,10 @@ const Home = () => {
         const { data, error } = await supabase.from("dicoding-notes").select();
 
         if (error) throw error;
-        if (data) setNotes(data);
-        setIsLoading(false);
+        if (data) {
+          setNotes(data);
+          setIsLoading(false);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -109,9 +119,24 @@ const Home = () => {
       }
     };
 
+    if (isSignOut) {
+      const signOut = async () => {
+        try {
+          const { error } = await supabase.auth.signOut();
+
+          if (error) throw error;
+          navigate("/signin");
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      signOut();
+    }
+
     getNotesFromSupabase();
     getArchiveFromSupabase();
-  }, [setNotes, setIsLoading, setArchive]);
+  }, [setNotes, setIsLoading, setArchive, isSignOut]);
 
   return (
     <>
@@ -142,7 +167,42 @@ const Home = () => {
               />
             </div>
           </section>
-          {isOpen ? <Modal setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
+          {isOpen ? (
+            <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
+              <div className="flex flex-col items-center justify-center">
+                <img
+                  className={clsx("h-56 w-56 rounded-full bg-red-300 p-1", "dark:bg-yellow-300")}
+                  src={profile.avatar ? profile.avatar : "/img/default-user-image.png"}
+                  alt="user avatar"
+                  loading="lazy"
+                />
+                <div className="flex flex-col items-center justify-center p-3">
+                  <div className="text-center">
+                    <p>
+                      <span className="font-semibold">Name:</span>{" "}
+                      {profile.fullname ? profile.fullname : "Anonymous"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Email:</span> {profile.email}
+                    </p>
+                  </div>
+                  <button
+                    className={clsx(
+                      "mt-4 w-fit rounded-md bg-slate-500",
+                      "py-2 px-3.5 font-semibold text-white",
+                      "transition-all ease-in-out",
+                      "hover:bg-slate-600"
+                    )}
+                    type="button"
+                    aria-label="logout"
+                    onClick={() => setIsSignOut(!isSignOut)}
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </Modal>
+          ) : null}
         </>
       ) : null}
     </>
