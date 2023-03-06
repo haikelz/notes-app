@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { TidakAda } from "~/components/atoms";
+import { CustomButton } from "../atoms/CustomButton";
 
 const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
   return (
@@ -25,7 +26,7 @@ const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
                 "dark:bg-gray-800"
               )}
             >
-              <div className="w-full">
+              <div className="h-full w-full">
                 <p className="mb-1 font-semibold">
                   ID: <span className="font-normal">{item.id}</span>
                 </p>
@@ -40,34 +41,22 @@ const ListArchive = ({ archive, handleDeleteArchive, handleUndoArchive }) => {
                 </p>
               </div>
               <div className="mt-2 flex w-full items-end justify-end space-x-4">
-                <button
+                <CustomButton
                   onClick={() =>
                     handleDeleteArchive(item.id, item.judul, item.keterangan, item.createdAt)
                   }
-                  className={clsx(
-                    "rounded-md bg-rose-400",
-                    "px-4 py-2",
-                    "font-bold text-white",
-                    "transition-all ease-in-out",
-                    "hover:bg-rose-500"
-                  )}
+                  className={clsx("bg-rose-400", "hover:bg-rose-500")}
                 >
                   Delete
-                </button>
-                <button
-                  className={clsx(
-                    "rounded-md bg-blue-500",
-                    "px-4 py-2",
-                    "font-bold text-white",
-                    "transition-all ease-in-out",
-                    "hover:bg-blue-600"
-                  )}
+                </CustomButton>
+                <CustomButton
                   onClick={() =>
                     handleUndoArchive(item.id, item.judul, item.keterangan, item.createdAt)
                   }
+                  className={clsx("bg-blue-500", "hover:bg-blue-600")}
                 >
                   Undo
-                </button>
+                </CustomButton>
               </div>
             </div>
           ))}

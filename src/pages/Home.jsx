@@ -22,16 +22,17 @@ const isLoadingAtom = atom(false);
 const isSignOutAtom = atom(false);
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [notes, setNotes] = useAtom(notesAtom);
   const [filterSearch, setFilterSearch] = useAtom(filterSearchAtom);
   const [archive, setArchive] = useAtom(archiveAtom);
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
-  const [isAuthenticated] = useUser();
   const [, setIsLoading] = useAtom(isLoadingAtom);
   const [isSignOut, setIsSignOut] = useAtom(isSignOutAtom);
   const [profile] = useAtom(profileAtom);
 
-  const navigate = useNavigate();
+  const { isAuthenticated, userData } = useUser();
 
   const handleDeleteNotes = (id) => {
     const localNotes = [...notes];
@@ -67,8 +68,8 @@ const Home = () => {
 
   const handleUndoArchive = (id, judul, keterangan, createdAt) => {
     const localArchive = [...archive];
-    const filteredLocalArchive = localArchive.filter((arc) => arc.id === id);
     const localNotes = [...notes];
+    const filteredLocalArchive = localArchive.filter((arc) => arc.id === id);
 
     localNotes.push({
       id: id,
@@ -80,6 +81,13 @@ const Home = () => {
     handleDeleteArchive(id);
     setNotes(localNotes);
     insertData("dicoding-notes", filteredLocalArchive);
+  };
+
+  const handleDeleteUser = async () => {
+    const { error } = await supabase.auth.admin.deleteUser(userData.user.id);
+
+    if (error) throw error;
+    navigate("/signin", { replace: true });
   };
 
   const filteredNotes = useMemo(
@@ -114,15 +122,15 @@ const Home = () => {
 
         if (error) throw error;
         if (data) setArchive(data);
-      } catch (err) {}
-      console.error(err);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     if (isSignOut) {
       const signOut = async () => {
         try {
           const { error } = await supabase.auth.signOut();
-
           if (error) throw error;
 
           window.location.reload(true);
@@ -131,7 +139,6 @@ const Home = () => {
           console.error(err);
         }
       };
-
       signOut();
     }
 
@@ -187,19 +194,34 @@ const Home = () => {
                       <span className="font-semibold">Email:</span> {profile.email}
                     </p>
                   </div>
-                  <button
-                    className={clsx(
-                      "mt-4 w-fit rounded-md bg-slate-500",
-                      "py-2 px-3.5 font-semibold text-white",
-                      "transition-all ease-in-out",
-                      "hover:bg-slate-600"
-                    )}
-                    type="button"
-                    aria-label="logout"
-                    onClick={() => setIsSignOut(true)}
-                  >
-                    Logout
-                  </button>
+                  <div className="flex space-x-4">
+                    <button
+                      className={clsx(
+                        "mt-4 w-fit rounded-md bg-slate-500",
+                        "py-2 px-3.5 font-semibold text-white",
+                        "transition-all ease-in-out",
+                        "hover:bg-slate-600"
+                      )}
+                      type="button"
+                      aria-label="logout"
+                      onClick={() => setIsSignOut(true)}
+                    >
+                      Logout
+                    </button>
+                    <button
+                      className={clsx(
+                        "mt-4 w-fit rounded-md bg-blue-500",
+                        "py-2 px-3.5 font-semibold text-white",
+                        "transition-all ease-in-out",
+                        "hover:bg-blue-600"
+                      )}
+                      type="button"
+                      aria-label="delete account"
+                      onClick={handleDeleteUser}
+                    >
+                      Delete Account
+                    </button>
+                  </div>
                 </div>
               </div>
             </Modal>

@@ -5,11 +5,13 @@ import supabase from "~/lib/utils/supabase";
 import { profileAtom } from "~/store";
 
 const isAuthenticatedAtom = atom(false);
+const userDataAtom = atom([]);
 
 export const useUser = () => {
   const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [userData, setUserData] = useAtom(userDataAtom);
   const [, setProfile] = useAtom(profileAtom);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export const useUser = () => {
         }
 
         if (data) {
+          setUserData(data);
           setProfile({
             avatar: data.user.user_metadata.avatar_url,
             email: data.user.email,
@@ -37,7 +40,7 @@ export const useUser = () => {
     };
 
     getUser();
-  }, [setIsAuthenticated]);
+  }, [setIsAuthenticated, setUserData, setProfile]);
 
-  return [isAuthenticated, setIsAuthenticated];
+  return { isAuthenticated, setIsAuthenticated, userData };
 };

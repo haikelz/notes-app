@@ -7,18 +7,16 @@ import { useUser } from "~/hooks/useUser";
 import { showFormattedDate } from "~/lib/utils/data";
 import supabase from "~/lib/utils/supabase";
 
-const previousNoteAtom = atom([{ id: "", judul: "", keterangan: "", createdAt: "" }]);
 const formDataAtom = atom({ judul: "", keterangan: "" });
 const limitCharAtom = atom(`Sisa Karakter: ${50}`);
 
 const UpdateNote = () => {
   const { id } = useParams();
+  const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  const [, setPreviousNote] = useAtom(previousNoteAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
   const [limitChar, setLimitChar] = useAtom(limitCharAtom);
-  const [isAuthenticated] = useUser();
 
   const handleChange = (event) => {
     const data = { ...formData };
@@ -27,6 +25,10 @@ const UpdateNote = () => {
     setFormData(data);
   };
 
+  /**
+   * set limit character for user input. Max character: 50
+   * @param event
+   */
   const handleChangeJudul = (event) => {
     const data = { ...formData };
     data[event.target.name] = event.target.value.slice(0, 50);
@@ -38,6 +40,10 @@ const UpdateNote = () => {
     setFormData(data);
   };
 
+  /**
+   * Logic for submitting updated note to supabase
+   * @param event
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -61,9 +67,13 @@ const UpdateNote = () => {
     }
   };
 
+  // for dynamic title
   useTitle("Update Note");
 
   useEffect(() => {
+    /**
+     * Get note that want to be updated by user
+     */
     const getPreviousNoteFromSupabase = async () => {
       try {
         const { data, error } = await supabase
@@ -78,9 +88,8 @@ const UpdateNote = () => {
         console.error(err);
       }
     };
-
     getPreviousNoteFromSupabase();
-  }, [setPreviousNote, id]);
+  }, [setFormData, id]);
 
   return (
     <>

@@ -15,7 +15,8 @@ const AddNote = () => {
 
   const [limitChar, setLimitChar] = useAtom(limitCharAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
-  const [isAuthenticated] = useUser();
+
+  const { isAuthenticated } = useUser();
 
   const handleChange = (event) => {
     const data = { ...formData };

@@ -33,8 +33,6 @@ const App = () => {
             <Route path="/update-note/:id" element={<UpdateNote />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            {/*<Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/send-email-confirmation" element={<SendEmailConfirmation />} />*/}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

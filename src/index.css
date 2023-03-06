@@ -5,7 +5,11 @@
 @tailwind utilities;
 
 * {
-  @apply font-rubik tracking-wide outline-none;
+  @apply font-rubik tracking-wide;
+}
+
+input {
+  @apply outline-blue-500;
 }
 
 body {

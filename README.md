@@ -3,6 +3,13 @@
   <p>An improvement from my previous Dicoding submission notes app</p>
 </div>
 
+## Features
+
+- Basic CRUD(Create, Read, Update, Delete) operation
+- Delete account
+- Sign in with Github, Google, or with email + password
+- Sign up with email + password
+
 ## Stuff
 
 - Frontend Library: [reactjs](https://beta.reactjs.org/)

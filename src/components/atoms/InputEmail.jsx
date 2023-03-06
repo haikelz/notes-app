@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 export const InputEmail = ({ values, handleChange, errors }) => {
   return (
@@ -25,3 +26,5 @@ export const InputEmail = ({ values, handleChange, errors }) => {
     </div>
   );
 };
+
+memo(InputEmail);

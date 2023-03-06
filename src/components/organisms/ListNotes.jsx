@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import reactStringReplace from "react-string-replace";
 import { TidakAda } from "~/components/atoms";
+import { CustomButton } from "../atoms/CustomButton";
 
 const ListNotes = ({ filteredNotes, handleDeleteNotes, handleArchive, filterSearch }) => {
   return (
@@ -26,7 +27,7 @@ const ListNotes = ({ filteredNotes, handleDeleteNotes, handleArchive, filterSear
                 "dark:bg-gray-800"
               )}
             >
-              <div className="w-full">
+              <div className="h-full w-full">
                 <p className="mb-1 font-semibold">
                   ID: <span className="font-normal">{note.id}</span>
                 </p>
@@ -50,45 +51,25 @@ const ListNotes = ({ filteredNotes, handleDeleteNotes, handleArchive, filterSear
                 </p>
               </div>
               <div className="mt-2 flex w-full items-end justify-end space-x-4">
-                <button
+                <CustomButton
                   onClick={() => handleDeleteNotes(note.id)}
-                  className={clsx(
-                    "rounded-md bg-rose-400",
-                    "px-4 py-2",
-                    "font-bold text-white",
-                    "transition-all ease-in-out",
-                    "hover:bg-rose-500"
-                  )}
+                  className={clsx("bg-rose-400", "hover:bg-rose-500")}
                 >
                   Delete
-                </button>
+                </CustomButton>
                 <Link to={`/update-note/${note.id}`}>
-                  <button
-                    className={clsx(
-                      "rounded-md bg-slate-500",
-                      "px-4 py-2",
-                      "font-bold text-white",
-                      "transition-all ease-in-out",
-                      "hover:bg-slate-600"
-                    )}
-                  >
+                  <CustomButton className={clsx("bg-slate-500", "hover:bg-slate-600")}>
                     Update
-                  </button>
+                  </CustomButton>
                 </Link>
-                <button
-                  className={clsx(
-                    "rounded-md bg-blue-500",
-                    "px-4 py-2",
-                    "font-bold text-white",
-                    "transition-all ease-in-out",
-                    "hover:bg-blue-600"
-                  )}
+                <CustomButton
                   onClick={() =>
                     handleArchive(note.id, note.judul, note.keterangan, note.createdAt)
                   }
+                  className={clsx("bg-blue-500", "hover:bg-blue-600")}
                 >
                   Archive
-                </button>
+                </CustomButton>
               </div>
             </div>
           ))}

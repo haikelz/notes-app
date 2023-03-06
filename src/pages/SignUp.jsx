@@ -12,13 +12,17 @@ const identitiesAtom = atom([]);
 const errMsgAtom = atom("");
 
 const SignUp = () => {
-  const [isSent, setIsSent] = useAtom(isSentAtom);
-  const [identities, setIdentities] = useAtom(identitiesAtom);
-  const [isAuthenticated] = useSession();
-  const [, setErrMsg] = useAtom(errMsgAtom);
-
+  const { isAuthenticated } = useSession();
   const { handleChange, values, errors } = useForm();
 
+  const [isSent, setIsSent] = useAtom(isSentAtom);
+  const [identities, setIdentities] = useAtom(identitiesAtom);
+  const [, setErrMsg] = useAtom(errMsgAtom);
+
+  /**
+   * Logic for submitting new data(user/account) from input user to supabase
+   * @param event
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
 
