@@ -17,10 +17,11 @@ const NotFound = () => {
             className={clsx(
               "rounded-md bg-blue-500",
               "px-4 py-2",
-              "font-semibold text-white",
+              "font-semibold text-white transition-all ease-in-out",
               "hover:bg-blue-600"
             )}
             type="button"
+            aria-label="back to home"
           >
             Back to Home
           </button>

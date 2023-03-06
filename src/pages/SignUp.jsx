@@ -9,11 +9,13 @@ import supabase from "~/lib/utils/supabase";
 
 const isSentAtom = atom(false);
 const identitiesAtom = atom([]);
+const errMsgAtom = atom("");
 
 const SignUp = () => {
   const [isSent, setIsSent] = useAtom(isSentAtom);
   const [identities, setIdentities] = useAtom(identitiesAtom);
   const [isAuthenticated] = useSession();
+  const [, setErrMsg] = useAtom(errMsgAtom);
 
   const { handleChange, values, errors } = useForm();
 
@@ -27,12 +29,15 @@ const SignUp = () => {
           password: values.password,
         });
 
-        if (error) throw error;
+        if (error) {
+          setErrMsg(error.message);
+          throw error;
+        }
         if (data) {
           setIsSent(true);
           setIdentities(data.user.identities);
+          console.log(data.user.identities);
         }
-        console.log(data);
       }
     } catch (err) {
       console.error(err);
@@ -75,15 +80,17 @@ const SignUp = () => {
           </section>
           {isSent ? (
             <Modal isOpen={isSent} setIsOpen={setIsSent}>
-              <div className="mt-3 flex flex-col items-center justify-center text-center">
-                {identities.length ? (
-                  <p>Berhasil! Silahkan cek Email mu ya</p>
-                ) : (
-                  <p>
-                    Alamat Email yang kamu masukkan sudah terdaftar! Pastikan Email kamu belum
-                    pernah didaftarkan kesini!
+              <div className="flex flex-col items-start justify-start">
+                <div className="flex flex-col">
+                  <span className="text-2xl font-bold">
+                    {identities.length ? "Success!" : "Error!"}
+                  </span>
+                  <p className="mt-2">
+                    {identities.length
+                      ? "Please check your email to confirm your Sign Up"
+                      : "This Email has been registered. Please use other Email to Sign Up!"}
                   </p>
-                )}
+                </div>
               </div>
             </Modal>
           ) : null}

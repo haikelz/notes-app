@@ -114,9 +114,8 @@ const Home = () => {
 
         if (error) throw error;
         if (data) setArchive(data);
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
+      console.error(err);
     };
 
     if (isSignOut) {
@@ -125,7 +124,9 @@ const Home = () => {
           const { error } = await supabase.auth.signOut();
 
           if (error) throw error;
-          navigate("/signin");
+
+          window.location.reload(true);
+          navigate("/signin", { replace: true });
         } catch (err) {
           console.error(err);
         }
@@ -195,7 +196,7 @@ const Home = () => {
                     )}
                     type="button"
                     aria-label="logout"
-                    onClick={() => setIsSignOut(!isSignOut)}
+                    onClick={() => setIsSignOut(true)}
                   >
                     Logout
                   </button>

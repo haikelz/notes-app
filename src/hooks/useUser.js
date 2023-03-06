@@ -24,8 +24,6 @@ export const useUser = () => {
         }
 
         if (data) {
-          console.log(data);
-
           setProfile({
             avatar: data.user.user_metadata.avatar_url,
             email: data.user.email,
