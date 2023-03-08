@@ -84,10 +84,17 @@ const Home = () => {
   };
 
   const handleDeleteUser = async () => {
-    const { error } = await supabase.auth.admin.deleteUser(userData.user.id);
+    try {
+      const { error } = await supabase.auth.admin.deleteUser(userData.user.id);
 
-    if (error) throw error;
-    navigate("/signin", { replace: true });
+      if (error) throw error;
+
+      localStorage.clear();
+      window.location.reload(true);
+      navigate("/signin", { replace: true });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const filteredNotes = useMemo(

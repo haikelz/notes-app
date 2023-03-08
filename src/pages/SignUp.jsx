@@ -12,7 +12,7 @@ const identitiesAtom = atom([]);
 const errMsgAtom = atom("");
 
 const SignUp = () => {
-  const { isAuthenticated } = useSession();
+  const [isAuthenticated] = useSession();
   const { handleChange, values, errors } = useForm();
 
   const [isSent, setIsSent] = useAtom(isSentAtom);

@@ -16,8 +16,8 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const [errMsg, setErrMsg] = useAtom(errMsgAtom);
+  const [isAuthenticated] = useSession();
 
-  const { isAuthenticated } = useSession();
   const { handleChange, values, errors } = useForm();
 
   const handleSubmit = async (event) => {
